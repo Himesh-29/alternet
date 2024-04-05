@@ -19,7 +19,7 @@ from models.attentions import Attention2d
 class LocalAttention(nn.Module):
 
     def __init__(self, dim_in, dim_out=None, *,
-                 window_size=7, k=1,
+                 window_size=4, k=1,
                  heads=8, dim_head=32, dropout=0.0):
         super().__init__()
         self.attn = Attention2d(dim_in, dim_out,
@@ -61,7 +61,7 @@ class AttentionBlockA(nn.Module):
 
     def __init__(self, dim_in, dim_out=None, *,
                  heads=8, dim_head=64, dropout=0.0, sd=0.0,
-                 stride=1, window_size=7, k=1, norm=nn.BatchNorm2d, activation=nn.GELU,
+                 stride=1, window_size=4, k=1, norm=nn.BatchNorm2d, activation=nn.GELU,
                  **block_kwargs):
         super().__init__()
         dim_out = dim_in if dim_out is None else dim_out
@@ -104,7 +104,7 @@ class AttentionBlockB(nn.Module):
 
     def __init__(self, dim_in, dim_out=None, *,
                  heads=8, dim_head=64, dropout=0.0, sd=0.0,
-                 stride=1, window_size=7, k=1, norm=nn.BatchNorm2d, activation=nn.GELU,
+                 stride=1, window_size=4, k=1, norm=nn.BatchNorm2d, activation=nn.GELU,
                  **block_kwargs):
         super().__init__()
         dim_out = dim_in if dim_out is None else dim_out
@@ -157,7 +157,7 @@ class StemA(nn.Module):
 
         self.layer0 = []
         if pool:
-            self.layer0.append(layers.convnxn(dim_in, dim_out, kernel_size=7, stride=2, padding=3))
+            self.layer0.append(layers.convnxn(dim_in, dim_out, kernel_size=4, stride=2, padding=3))
             self.layer0.append(layers.bn(dim_out))
             self.layer0.append(layers.relu())
             self.layer0.append(nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
@@ -181,7 +181,7 @@ class StemB(nn.Module):
 
         self.layer0 = []
         if pool:
-            self.layer0.append(layers.convnxn(dim_in, dim_out, kernel_size=7, stride=2, padding=3))
+            self.layer0.append(layers.convnxn(dim_in, dim_out, kernel_size=4, stride=2, padding=3))
             self.layer0.append(nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
         else:
             self.layer0.append(layers.conv3x3(dim_in, dim_out, stride=1))

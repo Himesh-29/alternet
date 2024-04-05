@@ -19,6 +19,7 @@ import models.cbamresnet as cbamresnet
 import models.vit as vit
 import models.pit as pit
 import models.mixer as mixer
+import models.alternet as alternet
 
 import ops.meters as meters
 
@@ -33,6 +34,17 @@ def get_model(name, num_classes=10, stem=False, verbose=True, **block_kwargs):
         model = alexnet.dnn_smooth(num_classes=num_classes, stem=stem, name=name, **block_kwargs)
     elif name in ["alexnet_mcdo_smoothing"]:
         model = alexnet.mcdo_smooth(num_classes=num_classes, stem=stem, name=name, **block_kwargs)
+    # Alternet
+    elif name in ["alternet_dnn_18"]:
+        model = alternet.dnn_18(num_classes=num_classes, name=name, **block_kwargs)
+    elif name in ["alternet_dnn_34"]:
+        model = alternet.dnn_34(num_classes=num_classes, name=name, **block_kwargs)
+    elif name in ["alternet_dnn_50"]:
+        model = alternet.dnn_50(num_classes=num_classes, name=name, **block_kwargs)
+    elif name in ["alternet_dnn_101"]:
+        model = alternet.dnn_101(num_classes=num_classes, name=name, **block_kwargs)
+    elif name in ["alternet_dnn_152"]:
+        model = alternet.dnn_152(num_classes=num_classes, name=name, **block_kwargs)
     # VGG
     elif name in ["vgg_dnn_11", "vgg_11"]:
         model = vgg.dnn_11(num_classes=num_classes, name=name, **block_kwargs)
